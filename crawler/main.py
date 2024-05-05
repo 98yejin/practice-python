@@ -21,6 +21,13 @@ class Config:
     batch_size: Optional[int] = 10
 
 
+USER_AGENTS = [
+    "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101 Firefox/70.0",
+    "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.130 Safari/537.36",
+    "Mozilla/5.0 (iPad; CPU OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1",
+]
+
+
 async def fetch_url(
     session: aiohttp.ClientSession, url: str, delay_range
 ) -> CrawlResult:
@@ -37,7 +44,7 @@ async def fetch_url(
         CrawlResult: An object containing the URL and the fetched content, or an error message if an exception occurs.
     """
     headers = {
-        "User-Agent": "Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0",
+        "User-Agent": random.choice(USER_AGENTS),
         "Accept": "*/*",
     }
     try:
