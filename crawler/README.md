@@ -16,6 +16,7 @@
 
 ## Checklist
 
+- allow redirects?
 - include multiple urls from same baseurl ?
   - can be blocked by that sites => need some delay
 - how many urls?
