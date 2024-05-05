@@ -1,3 +1,4 @@
+import json
 import random
 import aiohttp
 import asyncio
@@ -109,12 +110,13 @@ async def main(config: Config):
 
 
 if __name__ == "__main__":
-    urls = [
-        "http://example.com/page1",
-        "http://example.com/page2",
-        "http://example.com/page3",
-        # "https://98yejin.github.io",
-    ]
-    config = Config(urls=urls, delay_range=(1, 3), timeout_seconds=3, batch_size=10)
+    with open("config.json", "r") as file:
+        data = json.load(file)
+    config = Config(
+        urls=data["urls"],
+        delay_range=tuple(data["delay_range"]),  # Convert list to tuple
+        timeout_seconds=data["timeout_seconds"],
+        batch_size=data["batch_size"],
+    )
     results = asyncio.run(main(config))
     print(results)

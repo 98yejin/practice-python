@@ -1,0 +1,11 @@
+{
+  "batch_size": 10,
+  "delay_range": [1, 3],
+  "timeout_seconds": 3,
+  "urls": [
+    "http://example.com/page1",
+    "http://example.com/page2",
+    "http://example.com/page3",
+    "https://98yejin.github.io"
+  ]
+}
