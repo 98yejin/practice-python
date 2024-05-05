@@ -110,11 +110,16 @@ class Crawler:
             )
 
 
+def get_unique_urls(urls: List[str]) -> List[str]:
+    return list(set(urls))
+
+
 if __name__ == "__main__":
     with open("config.json", "r") as file:
         data = json.load(file)
+    unique_urls = get_unique_urls(data["urls"])
     config = Config(
-        urls=data["urls"],
+        urls=unique_urls,
         delay_range=tuple(data["delay_range"]),  # Convert list to tuple
         timeout_seconds=data["timeout_seconds"],
         batch_size=data["batch_size"],
