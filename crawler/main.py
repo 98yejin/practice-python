@@ -5,6 +5,11 @@ import asyncio
 from typing import List, Optional, Tuple
 from bs4 import BeautifulSoup
 from dataclasses import dataclass
+from tenacity import (
+    retry,
+    wait_exponential,
+    stop_after_attempt,
+)
 
 
 @dataclass
@@ -19,94 +24,90 @@ class Config:
     urls: List[str]
     delay_range: Tuple[int, int]
     timeout_seconds: int
+    user_agents: List[str]
     batch_size: Optional[int] = 10
 
 
-USER_AGENTS = [
-    "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101 Firefox/70.0",
-    "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.130 Safari/537.36",
-    "Mozilla/5.0 (iPad; CPU OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1",
-]
-
-
-async def fetch_url(
-    session: aiohttp.ClientSession, url: str, delay_range
-) -> CrawlResult:
-    """
-    Fetches the content of a given URL using an asynchronous HTTP session.
-    Need to rotate User-Agent or use proxy in real-world scenarios.
-
-    Args:
-        session (aiohttp.ClientSession): The asynchronous HTTP session.
-        url (str): The URL to fetch.
-        delay_range (tuple): A tuple representing the range of delay in seconds before making the request.
-
-    Returns:
-        CrawlResult: An object containing the URL and the fetched content, or an error message if an exception occurs.
-    """
-    headers = {
-        "User-Agent": random.choice(USER_AGENTS),
-        "Accept": "*/*",
-    }
-    try:
-        await asyncio.sleep(random.uniform(*delay_range))
-        async with session.get(url, headers=headers, allow_redirects=True) as response:
+@retry(wait=wait_exponential(multiplier=1, min=4, max=10), stop=stop_after_attempt(5))
+async def make_request(session: aiohttp.ClientSession, url: str, headers: dict):
+    async with session.get(url, headers=headers, allow_redirects=True) as response:
+        try:
             response.raise_for_status()
-            html = await response.text()
+        except Exception as e:
+            print(f"[ERROR] {type(e).__name__}: {e}")
+            raise e
+        return await response.text()
+
+
+class Crawler:
+    def __init__(self, config: Config) -> None:
+        self.config = config
+
+    async def fetch_url(self, session: aiohttp.ClientSession, url: str) -> CrawlResult:
+        """
+        Fetches the content of a given URL using an asynchronous HTTP session.
+        Need to rotate User-Agent or use proxy in real-world scenarios.
+
+        Args:
+            session (aiohttp.ClientSession): The asynchronous HTTP session.
+            url (str): The URL to fetch.
+
+        Returns:
+            CrawlResult: An object containing the URL and the fetched content, or an error message if an exception occurs.
+        """
+        headers = {
+            "User-Agent": random.choice(self.config.user_agents),
+            "Accept": "*/*",
+        }
+        try:
+            await asyncio.sleep(random.uniform(*self.config.delay_range))
+            html = await make_request(session, url, headers)
             soup = BeautifulSoup(html, "html.parser")
             text = soup.getText(separator="\n", strip=True)
             return CrawlResult(url=url, content=text)
-    except Exception as e:
-        print(f"[ERROR] {type(e).__name__}: {e}")
-        return CrawlResult(url=url, error=str(e))
+        except Exception as e:
+            print(f"[ERROR] {type(e).__name__}: {e}")
+            return CrawlResult(url=url, error=str(e))
 
+    async def process_batch(
+        self, session: aiohttp.ClientSession, urls: List[str]
+    ) -> List[CrawlResult]:
+        """
+        Process a batch of URLs asynchronously.
 
-async def process_batch(
-    urls: List[str], delay_range: Tuple[int], timeout_seconds: int
-) -> List[CrawlResult]:
-    """
-    Process a batch of URLs asynchronously.
+        Args:
+            session (aiohttp.ClientSession): The asynchronous HTTP session.
+            urls (List[str]): List of URLs to crawl.
 
-    Args:
-        urls (List[str]): List of URLs to crawl.
-        delay_range (Tuple[int]): Range of delay in seconds between each request.
-        timeout_seconds (int): Timeout in seconds for each request.
+        Returns:
+            List[CrawlResult]: List of crawl results.
 
-    Returns:
-        List[CrawlResult]: List of crawl results.
-
-    """
-    timeout = aiohttp.ClientTimeout(total=timeout_seconds)
-    async with aiohttp.ClientSession(timeout=timeout) as session:
+        """
         results = await asyncio.gather(
-            *[
-                fetch_url(session=session, url=url, delay_range=delay_range)
-                for url in urls
-            ]
+            *[self.fetch_url(session=session, url=url) for url in urls]
         )
         return results
 
+    async def run(self):
+        """
+        Executes the run crawling process.
 
-async def main(config: Config):
-    """
-    Executes the main crawling process.
+        Args:
+            config (Config): The configuration object containing the URLs, batch size, delay range, and timeout.
 
-    Args:
-        config (Config): The configuration object containing the URLs, batch size, delay range, and timeout.
-
-    Returns:
-        List[Result]: A list of results from processing each batch of URLs.
-    """
-    urls = config.urls
-    batches = [
-        urls[i : i + config.batch_size] for i in range(0, len(urls), config.batch_size)
-    ]
-    return await asyncio.gather(
-        *[
-            process_batch(batch, config.delay_range, config.timeout_seconds)
-            for batch in batches
+        Returns:
+            List[Result]: A list of results from processing each batch of URLs.
+        """
+        urls = self.config.urls
+        batches = [
+            urls[i : i + self.config.batch_size]
+            for i in range(0, len(urls), self.config.batch_size)
         ]
-    )
+        timeout = aiohttp.ClientTimeout(total=self.config.timeout_seconds)
+        async with aiohttp.ClientSession(timeout=timeout) as session:
+            return await asyncio.gather(
+                *[self.process_batch(session, batch) for batch in batches]
+            )
 
 
 if __name__ == "__main__":
@@ -117,6 +118,8 @@ if __name__ == "__main__":
         delay_range=tuple(data["delay_range"]),  # Convert list to tuple
         timeout_seconds=data["timeout_seconds"],
         batch_size=data["batch_size"],
+        user_agents=data["user_agents"],
     )
-    results = asyncio.run(main(config))
+    crawler = Crawler(config)
+    results = asyncio.run(crawler.run())
     print(results)
