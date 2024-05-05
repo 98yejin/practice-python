@@ -27,7 +27,7 @@
   - are we gonna handle errors?
     - just logging or retry or stop after ...
     - or nothing
-- Respect robots.txt: Always check the robots.txt file of a website to ensure you're allowed to scrape it.
+- Respect robots.txt: are will gonna check the robots.txt file and respect it?
 - User-Agent String: Some websites might block requests from scripts, so it's useful to set a user-agent string that mimics a browser.
 - Error Handling: Enhance error handling by retrying failed requests or logging errors.
 - Scalability: For very large scale scraping tasks, you might need more robust solutions like distributed scraping using frameworks such as Scrapy.
