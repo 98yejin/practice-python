@@ -33,12 +33,12 @@ async def fetch_url(
 ) -> CrawlResult:
     """
     Fetches the content of a given URL using an asynchronous HTTP session.
-    Need to roate User-Agent or use proxy in real world scenario
+    Need to rotate User-Agent or use proxy in real-world scenarios.
 
     Args:
         session (aiohttp.ClientSession): The asynchronous HTTP session.
         url (str): The URL to fetch.
-        delay_range: A tuple representing the range of delay in seconds before making the request.
+        delay_range (tuple): A tuple representing the range of delay in seconds before making the request.
 
     Returns:
         CrawlResult: An object containing the URL and the fetched content, or an error message if an exception occurs.
@@ -63,6 +63,18 @@ async def fetch_url(
 async def process_batch(
     urls: List[str], delay_range: Tuple[int], timeout_seconds: int
 ) -> List[CrawlResult]:
+    """
+    Process a batch of URLs asynchronously.
+
+    Args:
+        urls (List[str]): List of URLs to crawl.
+        delay_range (Tuple[int]): Range of delay in seconds between each request.
+        timeout_seconds (int): Timeout in seconds for each request.
+
+    Returns:
+        List[CrawlResult]: List of crawl results.
+
+    """
     timeout = aiohttp.ClientTimeout(total=timeout_seconds)
     async with aiohttp.ClientSession(timeout=timeout) as session:
         results = await asyncio.gather(
@@ -75,6 +87,15 @@ async def process_batch(
 
 
 async def main(config: Config):
+    """
+    Executes the main crawling process.
+
+    Args:
+        config (Config): The configuration object containing the URLs, batch size, delay range, and timeout.
+
+    Returns:
+        List[Result]: A list of results from processing each batch of URLs.
+    """
     urls = config.urls
     batches = [
         urls[i : i + config.batch_size] for i in range(0, len(urls), config.batch_size)
