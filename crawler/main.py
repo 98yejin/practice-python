@@ -1,13 +1,28 @@
 import aiohttp
 import asyncio
 from typing import List
+from bs4 import BeautifulSoup
+from dataclasses import dataclass
 
 
-async def fetch_url(session, url):
+@dataclass
+class CrawlResult:
+    url: str
+    content: str
+
+
+async def fetch_url(session, url) -> CrawlResult:
+    async with session.get(url) as response:
+        response.raise_for_status()
+        html = await response.text()
+        soup = BeautifulSoup(html, "html.parser")
+        text = soup.getText(separator="\n", strip=True)
+        return CrawlResult(url=url, content=text)
+
+
+async def process_url(session, url) -> CrawlResult:
     try:
-        async with session.get(url) as response:
-            response.raise_for_status()
-            return await response.text()
+        return await fetch_url(session, url)
     except aiohttp.ClientResponseError as e:
         print(f"[ERROR] ClientResponseError: [{e}]")
     except aiohttp.ClientError as e:
@@ -16,14 +31,14 @@ async def fetch_url(session, url):
         print(f"[ERROR] ClientTimeout: [{e}]")
     except Exception as e:
         print(f"[ERROR] Exception: [{e}]")
-    return None
+    return CrawlResult(url=url, content="")
 
 
-async def process_batch(urls: List[str], timeout_seconds=3):
+async def process_batch(urls: List[str], timeout_seconds=3) -> List[CrawlResult]:
     timeout = aiohttp.ClientTimeout(total=timeout_seconds)
     async with aiohttp.ClientSession(timeout=timeout) as session:
         results = await asyncio.gather(
-            *[fetch_url(session=session, url=url) for url in urls]
+            *[process_url(session=session, url=url) for url in urls]
         )
         return results
 
@@ -38,7 +53,7 @@ if __name__ == "__main__":
         "http://example.com/page1",
         "http://example.com/page2",
         "http://example.com/page3",
-        # Add more URLs as needed
+        "https://98yejin.github.io",
     ]
     results = asyncio.run(main(urls))
     print(results)
