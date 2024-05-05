@@ -13,6 +13,14 @@ class CrawlResult:
     error: Optional[str] = None
 
 
+@dataclass
+class Config:
+    urls: List[str]
+    delay_range: Tuple[int, int]
+    timeout_seconds: int
+    batch_size: Optional[int] = 10
+
+
 async def fetch_url(
     session: aiohttp.ClientSession, url: str, delay_range
 ) -> CrawlResult:
@@ -59,12 +67,16 @@ async def process_batch(
         return results
 
 
-async def main(
-    urls: List[str], delay_range: Tuple[int], timeout_seconds: int, batch_size: int = 10
-):
-    batches = [urls[i : i + batch_size] for i in range(0, len(urls), batch_size)]
+async def main(config: Config):
+    urls = config.urls
+    batches = [
+        urls[i : i + config.batch_size] for i in range(0, len(urls), config.batch_size)
+    ]
     return await asyncio.gather(
-        *[process_batch(batch, delay_range, timeout_seconds) for batch in batches]
+        *[
+            process_batch(batch, config.delay_range, config.timeout_seconds)
+            for batch in batches
+        ]
     )
 
 
@@ -75,8 +87,6 @@ if __name__ == "__main__":
         "http://example.com/page3",
         # "https://98yejin.github.io",
     ]
-    delay_range = (1, 3)
-    timeout_seconds = 3
-    batch_size = 10
-    results = asyncio.run(main(urls, delay_range, timeout_seconds, batch_size))
+    config = Config(urls=urls, delay_range=(1, 3), timeout_seconds=3, batch_size=10)
+    results = asyncio.run(main(config))
     print(results)
