@@ -7,7 +7,7 @@ async def fetch_url(session, url):
     try:
         async with session.get(url) as response:
             response.raise_for_status()
-            return response
+            return await response.text()
     except aiohttp.ClientResponseError as e:
         print(f"[ERROR] ClientResponseError: [{e}]")
     except aiohttp.ClientError as e:
@@ -22,7 +22,9 @@ async def fetch_url(session, url):
 async def process_batch(urls: List[str], timeout_seconds=3):
     timeout = aiohttp.ClientTimeout(total=timeout_seconds)
     async with aiohttp.ClientSession(timeout=timeout) as session:
-        results = asyncio.gather(*[fetch_url(session=session, url=url) for url in urls])
+        results = await asyncio.gather(
+            *[fetch_url(session=session, url=url) for url in urls]
+        )
         return results
 
 
@@ -38,4 +40,5 @@ if __name__ == "__main__":
         "http://example.com/page3",
         # Add more URLs as needed
     ]
-    asyncio.run(main(urls))
+    results = asyncio.run(main(urls))
+    print(results)
