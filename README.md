@@ -597,7 +597,7 @@ Unless there is I/O involved, synchronous functions are much faster due to the G
 
 In the end, the choice of technology should always be based on the nature of the problem. For CPU-bound tasks like FizzBuzz, traditional synchronous processing methods may be more efficient in terms of performance. Asynchronous programming primarily demonstrates its advantages in I/O-bound tasks, so it is important to understand the nature of the task and choose the appropriate tool.
 
-### 파이썬의 라이프사이클 관리
+### Python's Lifecycle Management
 
 - Program Execution
 
