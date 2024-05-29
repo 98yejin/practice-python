@@ -76,19 +76,19 @@
 
 ### Tree
 
-- interview tip : 트리 및 그래프 문제들은 대부분 세부사항이 모호하거나 가정 자체가 틀린 경우가 많다. 유의하고, 필요하다면 명확하게 해 줄 것을 요구하자.
+- Interview Tip: Tree and graph problems often have ambiguous details or incorrect assumptions. Be cautious and, if necessary, ask for clarification.
 
 [Traverse binary tree]
 
-- In-order traversal ( `L -> C -> R` )
-- Pre-order-traversal ( `C -> L -> R` )
-- Post-order traversal ( `L -> R -> C` )
+- In-order traversal (`L -> C -> R`)
+- Pre-order traversal (`C -> L -> R`)
+- Post-order traversal (`L -> R -> C`)
 
 [Min-heap]
 
-- 트리의 마지막 단계에서 오른쪽 부분을 뺀 부분이 가득 채워졌다는 점이 완전 이진 트리
-- 각 노드의 원소가 자식보다 작다는 특성이 있음
-- Insert( `O( logn)` ), extract_min ( `O( logn)` )
+- A complete binary tree where the last level is filled from left to right.
+- Each node's element is smaller than its children.
+- Insert (`O(logn)`), extract_min (`O(logn)`)
 
 [When to use]
 
@@ -107,32 +107,31 @@
 
 [When to use]
 
-- 해시테이블을 이용하면 주어진 문자열이 유효한지 아닌지 빠르게 확인할 수 있지만, 그 문자열이 어떤 유효한 단어의 접두사인지 확인할 수는 없다. 트라이를 이용하면 아주 빠르게 확인할 수 있다.
-- 트라이는 길이가 k인 문자열이 주어졌을 때 O(k) 시간에 해당 문자열이 유효한 접두사인지 확인할 수 있다.
-- 해시테이블을 사용했을 때와 같은 수행 시간이다.
+- Using a hash table, you can quickly determine whether a given string is valid or not, but you cannot determine if that string is a valid prefix of any valid word. By using a trie, you can quickly determine this.
+- With a trie, you can check if a given string is a valid prefix in O(k) time, where k is the length of the string.
+- This is the same time complexity as using a hash table.
 
 [ETC]
 
-- Prefix tree 라고도 불리는 trie
-- N-ary tree 의 변종으로 각 노드에 문자를 저장하는 자료구조
-- 트리를 아래쪽으로 순회하면 단어 하나가 나옴
-- 널 노드라고 불리는 \* 노드는 종종 단어의 끝을 나타냄
-- 자연어 처리 분야에서 문자열 탐색을 위한 자료구조로 널리 쓰임
-- 각각의 문자 단위로 색인을 구축한 것과 유사
+- Also known as a prefix tree, a trie is a data structure that stores characters at each node, which is a variant of an N-ary tree.
+- Traversing the tree downwards yields a single word.
+- The null node, denoted by \*, often represents the end of a word.
+- Widely used as a data structure for string search in natural language processing.
+- Similar to building an index for each character.
 
 ### Graph
 
-- 트리는 사이클이 없는 하나의 연결 그래프임.
-- 그래프가 트리보다 큰 개념임.
-- 그래프는 단순히 노드와 그 노드를 연결하는 간선(edge)을 하나로 모아놓은 것임
-- 방향성이 있을 수도 있고 없을 수도 있음.
-- 사이클이 존재하지 않을 수도 있고 acycle graph 라고 부름
-- 그래프는 여러개의 고립된 부분 그래프(isolated subgraphs)로 구성될 수 있고, 모든 정점 쌍(pair of vertices) 간에 경로가 존재하는 그래프는 연결 그래프라고 부름.
+- A tree is a connected graph without cycles.
+- A graph is a larger concept than a tree.
+- A graph is simply a collection of nodes and the edges that connect those nodes.
+- It can be directed or undirected.
+- It may or may not have cycles, and a graph without cycles is called an acyclic graph.
+- A graph can be composed of multiple isolated subgraphs, and a graph in which there is a path between every pair of vertices is called a connected graph.
 
-[그래프 탐색]
+[Graph Traversal]
 
-- Depth-first search ( 모든 노드를 방문하고자 할 때 선호됨, 반드시 어떤 노드를 방문했는지 체크해야함. 안그러면 무한루프 빠지기 쉬움 )
-- Breadth-first search ( 최단 경로 또는 임의의 경로, Queue 사용 )
+- Depth-first search (preferred when visiting all nodes, must keep track of visited nodes to avoid infinite loops)
+- Breadth-first search (used for finding shortest paths or arbitrary paths, uses a queue)
 
 ### Stack
 
@@ -146,8 +145,8 @@
 
 [Why to use]
 
-- 재귀 알고리즘을 사용할 때 유용하다.
-- LIFO 순서를 따른다.
+- Useful when using recursive algorithms.
+- Follows LIFO (Last-In, First-Out) order.
 - Suitable when you need to access the most recently added item first or when the order of processing needs to be reversed.
 
 [When to use]
@@ -241,9 +240,9 @@ Python’s collections.deque
 
 [Etc]
 
-- 배열의 크기를 자동으로 조절할 수 있음.
-- 데이터를 덧붙일 때마다 배열 혹은 리스트의 크기가 증가함.
-- 필요에 따라 크기를 변화시킬 수 있으면서도 O(1)의 접근 시간을 유지함. 통상적으로 배열이 가득 차는 순간, 배열의 크기를 두 배로 늘림. 크기를 두 배 늘리는 시간은 O(n)이지만 자주 발생하는 일이 아니어서 amortized insertion time 으로 계산했을 때는 여전히 O(1) 임
+- Automatically resizes the size of the array.
+- The size of the array or list increases every time data is appended.
+- It maintains O(1) access time while being able to change the size as needed. Typically, when the array is full, the size is doubled. Doubling the size takes O(n) time, but it does not occur frequently, so when calculated as amortized insertion time, it is still O(1).
 
 ### Hash Table
 
@@ -260,10 +259,10 @@ Avg case times listed for dict objects assume that hash function for the objects
 
 [Why to use]
 
-- 효율적인 탐색을 위한 자료구조
-- Linked list 와 hash code function 으로 구현할 수 있음
-- 또는 균형 이진 탐색 트리로 구현할 수 있음. 크기가 큰 배열을 미리 할당해 놓지 않아도 되기 때문에 잠재적으로 적은 공간을 사용함.
-- 키의집합을 특정 순서대로 접근할 수 있음
+- Efficient data structure for searching
+- Can be implemented using linked lists and hash code function
+- Alternatively, can be implemented using a balanced binary search tree. It uses potentially less space as it doesn't require pre-allocating a large array.
+- Allows accessing the set of keys in a specific order
 
 [When to use]
 
@@ -344,11 +343,11 @@ O(n), where n is the number of elements in the array. Merge sort requires additi
 
 [Why to use]
 
-- 효율성 : 병합 정렬은 모든 경우에 O(n log n)의 시간 복잡도를 가지므로 대규모 데이터 세트를 정렬하는 데 효율적입니다. 따라서 정렬 성능이 중요한 응용 분야에 적합합니다.
-- 안정성 : 병합 정렬은 안정적인 정렬 알고리즘입니다. 즉, 동일한 요소의 상대적 순서를 유지합니다. 이 속성은 동일한 요소의 원래 순서를 유지해야 하는 시나리오에서 중요합니다.
-- 분할 정복 : 병합 정렬은 정렬 문제를 더 작은 하위 문제로 나누고 독립적으로 정렬한 다음 정렬된 하위 배열을 병합하는 분할 정복 전략을 따릅니다. 이는 다른 정렬 알고리즘에 비해 구현하고 이해하기가 더 쉽습니다.
-- 예측 가능한 성능 : 병합 정렬은 일관된 성능 특성을 가지며 다른 정렬 알고리즘과 같이 최악의 시나리오를 겪지 않습니다. 다양한 크기와 분포를 가진 데이터 세트에서도 잘 작동합니다.
-- 내부 아님(Not In-Place) : 병합 정렬은 내부 정렬 알고리즘이 아니며 하위 배열 병합을 위해 추가 메모리가 필요하지만 효율성과 안정성 이점이 이 오버헤드보다 더 큰 경우가 많습니다.
+- Efficiency: Merge sort has a time complexity of O(n log n) in all cases, making it efficient for sorting large datasets. Therefore, it is suitable for applications where sorting performance is important.
+- Stability: Merge sort is a stable sorting algorithm, meaning it maintains the relative order of equal elements. This property is important in scenarios where the original order of equal elements needs to be preserved.
+- Divide and conquer: Merge sort follows a divide and conquer strategy by recursively dividing the sorting problem into smaller subproblems, independently sorting them, and then merging the sorted subarrays. This makes it easier to implement and understand compared to other sorting algorithms.
+- Predictable performance: Merge sort exhibits consistent performance characteristics and does not suffer from worst-case scenarios like some other sorting algorithms. It performs well on datasets of varying sizes and distributions.
+- Not In-Place: Merge sort is not an in-place sorting algorithm and requires additional memory for merging subarrays. However, the efficiency and stability advantages often outweigh this overhead.
 
 ### Quick Sort
 
@@ -527,7 +526,7 @@ O(log n) on average, O(n) in the worst case due to recursive calls. Quick sort i
 
 ### Memory - Heap vs Stack
 
-#### Stack
+#### Memory - Stack
 
 - Automatic Memory Management: The stack is managed automatically by the compiler or runtime environment. Memory allocated on the stack is automatically deallocated when it goes out of scope.
 - Static Memory Allocation: Memory allocation on the stack follows a Last-In-First-Out (LIFO) strategy. Each function call creates a new stack frame, which includes parameters, local variables, and return addresses.
@@ -535,7 +534,7 @@ O(log n) on average, O(n) in the worst case due to recursive calls. Quick sort i
 - Faster Access: Accessing memory on the stack is faster than on the heap because it involves simple pointer arithmetic.
 - Scope-based: Variables allocated on the stack have a limited scope and are only accessible within the block or function in which they are declared.
 
-#### Heap
+#### Memory - Heap
 
 - Manual Memory Management: Memory on the heap is managed manually by the programmer. Memory allocated on the heap must be explicitly deallocated to prevent memory leaks.
 - Dynamic Memory Allocation: Memory allocation on the heap can be dynamic, allowing for flexible memory usage and allocation of memory blocks of varying sizes.
@@ -552,70 +551,67 @@ In summary, the stack and heap serve different purposes in memory management, wi
 
 ### Recursion vs Iteration
 
-재귀적 알고리즘을 사용하면 공간 효율성이 나빠질 수 있다. 재귀 호출이 한 번 발생할 때마다 스택에 새로운 층(layer)을 추가해야 한다. 이는 재귀의 깊이가 n일 때 O(n) 만큼의 메모리를 사용하게 된다는 것을 의미한다.
-이런 이유로 재귀적 알고리즘을 순환적으로 구현하는 게 더 나을 수도 있다. 하지만 순환적으로 구현된 코드는 때로는 훨씬 더 복잡하기 때문에 타협하는 게 나을 수 있다.
-
-```
-python recursive 횟수 기본적으로 1000번으로 설정되어 있음. 변경은 가능하지만, recursion error 가 발생해서 스택이 터질 수 있고 이런 경우 iterative approach 를 사용하는 것도 방법임
-```
+- Using recursive algorithms can lead to poor space efficiency. Each recursive call adds a new layer to the stack, which means that O(n) memory is used when the depth of recursion is n.
+- For this reason, it may be better to implement recursive algorithms iteratively. However, code implemented iteratively can sometimes be much more complex, so it may be better to compromise.
+- By default, the number of recursive calls in Python is set to 1000. It is possible to change this value, but be cautious as it may lead to a recursion error and cause the stack to overflow. In such cases, using an iterative approach can be an alternative solution.
 
 ### Process vs Thread
 
-- 프로세스는 실행되고 있는 프로그램의 인스턴스라고 생각할 수 있다. 프로세스는 CPU 시간이나 메모리 등의 시스템 자원이 할당되는 독립적인 객체이다. 각 프로세스는 별도의 주소 공간에서 실행되며, 한 프로세스는 다른 프로세스의 변수나 자료구조에 접근할 수 없다. 한 프로세스가 다른 프로세스의 자원에 접근하려면 프로세스 간 통신(IPC, inter-process communication)을 사용해야 한다. 프로세스 간 통신 방법으로는 파이프, 파일, 소켓(pipes, queues, or shared memory) 등을 이용한 방법이 있다.
+- A process can be thought of as an instance of an executing program. It is an independent entity that is allocated system resources such as CPU time and memory. Each process runs in a separate address space and cannot access the variables or data structures of other processes. If one process needs to access the resources of another process, inter-process communication (IPC) must be used. IPC methods include pipes, files, and sockets.
 
-- 스레드는 프로세스 안에 존재하며 프로세스의 자원(힙 공간 등)을 공유한다. 같은 프로세스 안에 있는 여러 스레드들은 같은 힙 공간을 공유한다. 반면에 프로세스는 다른 프로세스의 메모리에 직접 접근할 수 없다. 각각의 스레드는 별도의 레지스터와 스택을 갖고 있지만, 힙 메모리는 서로 읽고 쓸 수 있다.
+- Threads exist within a process and share the process's resources, such as the heap space. Multiple threads within the same process share the same heap space. However, a process cannot directly access the memory of another process. Each thread has its own registers and stack, but they can read and write to the shared heap memory.
 
-- 스레드는 프로세스의 특정한 수행 경로와 같다. 한 스레드가 프로세스 자원을 변경하면, 다른 이웃 스레드(sibling thread)도 그 변경 결과를 즉시 볼 수 있다.
+- Threads are like specific execution paths within a process. When one thread modifies the resources of a process, other sibling threads can immediately see the changes.
 
 ### Context Switching
 
-Context Switching 은 두 프로세스를 전환하는 데 드는 시간이다. 즉, 대기 중인 프로세스를 실행 상태로 전환하고, 실행 중인 프로세스를 대기 상태나 종료 상태로 전환하는 데 드는 시간이다. 멀티태스킹을 할 때 이런 일이 발생한다. 운영체제는 대기중인 프로세스의 상태 정보를 메모리에 올리고, 현재 실행 중인 프로세스의 상태 정보는 저장해야 한다.
+Context Switching is the time it takes to switch between two processes. It refers to the time it takes to transition a waiting process to the running state and to transition a running process to the waiting or terminated state. This occurs during multitasking. The operating system needs to load the state information of the waiting process into memory and save the state information of the currently running process.
 
 ### Deadlock
 
-[발생 조건]
+[Conditions for Deadlock]
 
-- Mutual Exclusion: 한번에 한 프로세스만 공유 자원을 사용할 수 있다.
-- Hold and Wait: 공유 자원에 대한 접근 권한을 갖고 있는 프로세스가, 그 접근 권한을 양보하지 않은 상태에서 다른 자원에 대한 접근 권한을 요구할 수 있다
-- No Preemption: 한 프로세스가 다른 프로세스의 자원 접근 권한을 강제로 취소할 수 없다
-- Circular wait: 두 개 이상의 프로세스가 자원 접근을 기다리는데, 그 관계에 사이클이 존재한다
+- Mutual Exclusion: Only one process can use a shared resource at a time.
+- Hold and Wait: A process holding a resource can request additional resources without releasing the ones it already holds.
+- No Preemption: Resources cannot be forcibly taken away from a process.
+- Circular Wait: There is a circular chain of two or more processes, where each process is waiting for a resource held by another process in the chain.
 
-공유 자원 중 많은 경우 Mutual Exclusion 은 해제하기 어렵기 때문에, Circular Wait 을 방지하는 데 초점이 맞춰져 있다.
+Since it is difficult to release Mutual Exclusion for most shared resources, the focus is on preventing Circular Wait.
 
 ### Synchroneous vs Asynchroneous
 
-I/O 작업이 없는 이상 GIL 때문에 동기 함수가 훨씬 빠르다.
+Unless there is I/O involved, synchronous functions are much faster due to the Global Interpreter Lock (GIL).
 
-- 함수 호출과 오버헤드
+- Function Calls and Overhead
 
-  - 동기 함수: 동기 함수는 직접적이고 단순한 호출 스택을 가집니다. 각 함수는 호출되면 완료될 때까지 실행되며, 다른 작업으로의 컨텍스트 전환은 발생하지 않습니다. 이는 매우 효율적이며, 작업의 불필요한 지연이 없습니다.
-  - 비동기 함수: asyncio와 같은 비동기 함수는 이벤트 루프를 사용하여 작업을 스케줄링하고 실행합니다. 이 과정에서 함수 호출, 작업 준비, 이벤트 루프에 작업을 등록하고, 완료를 기다리는 등의 추가적인 스텝이 필요합니다. 이러한 각 스텝은 오버헤드를 발생시키며, 특히 CPU 바운드 작업에서는 이 오버헤드가 전체 실행 시간에 영향을 줄 수 있습니다.
+  - Synchronous Functions: Synchronous functions have a direct and simple call stack. Each function is executed until completion when called, without any context switching to other tasks. This is highly efficient and eliminates unnecessary delays in the execution of tasks.
+  - Asynchronous Functions: Asynchronous functions, such as asyncio, schedule and execute tasks using an event loop. This process involves additional steps such as function calls, task preparation, registering tasks with the event loop, and waiting for completion. Each of these steps incurs overhead, which can have an impact on the overall execution time, especially in CPU-bound tasks.
 
-- 작업의 본질
+- Nature of the Task
 
-  - CPU 바운드 작업: FizzBuzz와 같은 문제는 숫자를 계산하고 조건을 평가하는 CPU 바운드 작업입니다. 이러한 작업에서는 연속적이고 빠른 처리가 중요합니다. CPU 바운드 작업에서는 작업을 빠르게 처리할 수 있는 동기 처리 방식이 더 적합할 수 있습니다.
-  - I/O 바운드 작업: 비동기 함수는 I/O 작업(예: 파일 읽기/쓰기, 네트워크 요청)을 처리할 때 효과적입니다. I/O 작업은 대기 시간이 길기 때문에, 이벤트 루프는 I/O 작업이 완료되기를 기다리는 동안 다른 작업을 진행할 수 있어 자원을 효율적으로 사용할 수 있습니다.
+  - CPU-Bound Tasks: Problems like FizzBuzz involve calculating numbers and evaluating conditions, which are CPU-bound tasks. In such tasks, continuous and fast processing is important. Synchronous processing methods that can handle tasks quickly may be more suitable for CPU-bound tasks.
+  - I/O-Bound Tasks: Asynchronous functions are effective in handling I/O tasks (e.g., file reading/writing, network requests). I/O tasks have long waiting times, so the event loop can perform other tasks while waiting for the completion of I/O tasks, making efficient use of resources.
 
-- 비동기 프로그래밍의 적합성
-  - 비동기 프로그래밍의 적합성: 비동기 프로그래밍은 본질적으로 비효율적인 I/O 작업을 최적화하도록 설계되었습니다. 따라서 I/O 바운드가 아닌 간단한 계산 작업에 비동기 프로그래밍을 적용하는 것은 오버킬일 수 있으며, 오히려 성능을 저하시킬 수 있습니다.
+- Suitability of Asynchronous Programming
+  - Suitability of Asynchronous Programming: Asynchronous programming is designed to optimize inherently inefficient I/O tasks. Therefore, applying asynchronous programming to simple computational tasks that are not I/O-bound can be overkill and may even degrade performance.
 
-결국, 기술 선택은 항상 문제의 특성에 맞추어 결정되어야 합니다. FizzBuzz와 같은 CPU 바운드 작업에서는 전통적인 동기 처리 방식이 성능면에서 더 효율적일 수 있습니다. 비동기 프로그래밍은 주로 I/O 바운드 작업에서 그 장점을 발휘하므로, 작업의 성격을 정확히 이해하고 적절한 도구를 선택하는 것이 중요합니다.
+In the end, the choice of technology should always be based on the nature of the problem. For CPU-bound tasks like FizzBuzz, traditional synchronous processing methods may be more efficient in terms of performance. Asynchronous programming primarily demonstrates its advantages in I/O-bound tasks, so it is important to understand the nature of the task and choose the appropriate tool.
 
 ### 파이썬의 라이프사이클 관리
 
-- 프로그램 실행
+- Program Execution
 
-  - 소스 코드 해석: 파이썬 프로그램이 시작되면, 파이썬 인터프리터는 먼저 소스 코드를 읽어 들입니다. 이 코드는 텍스트 파일(.py) 형태일 수도 있고, 이미 컴파일된 바이트코드(.pyc)일 수도 있습니다.
-  - 컴파일: 소스 코드는 파이썬의 내장 컴파일러에 의해 바이트코드로 변환됩니다. 이 바이트코드는 파이썬 가상 머신(PVM)이 이해할 수 있는 중간 형태의 코드입니다.
-  - 실행: 컴파일된 바이트코드는 파이썬 가상 머신에 의해 실행됩니다. PVM은 스택 기반의 인터프리터로서, 하나하나의 연산을 순차적으로 처리합니다.
+  - Source Code Interpretation: When a Python program starts, the Python interpreter first reads the source code. This code can be in the form of a text file (.py) or already compiled bytecode (.pyc).
+  - Compilation: The source code is then compiled into bytecode by the built-in Python compiler. This bytecode is an intermediate form of code that the Python Virtual Machine (PVM) can understand.
+  - Execution: The compiled bytecode is executed by the Python Virtual Machine. The PVM is a stack-based interpreter that processes each operation sequentially.
 
-- 메모리 관리 및 가비지 컬렉션
+- Memory Management and Garbage Collection
 
-  - 자동 메모리 관리: 파이썬은 자동 메모리 관리를 제공합니다. 개발자는 객체 생성에만 집중하면, 생성된 객체의 메모리 할당은 파이썬 인터프리터가 자동으로 처리합니다.
-  - 참조 카운팅: 파이썬은 객체의 참조 수를 추적하여 참조 카운트가 0이 되는 순간 객체를 메모리에서 해제합니다. 이는 가장 기본적인 메모리 관리 방식입니다.
-  - 가비지 컬렉션: 참조 카운팅만으로는 해결할 수 없는 순환 참조 문제를 해결하기 위해 파이썬은 가비지 컬렉터를 포함하고 있습니다. 이는 주기적으로 메모리를 검사하여 도달할 수 없는 객체들을 찾아 메모리에서 해제합니다.
-  - 세대별 수집(Generational Collection): 파이썬은 세대별 가비지 컬렉션 알고리즘을 사용합니다. 이는 객체를 생성된 지 얼마나 오래되었는지에 따라 여러 세대로 나누어 관리합니다. 젊은 세대의 객체에서 발생하는 가비지는 빈번하게 수집하고, 나이가 많은 세대는 덜 자주 수집합니다. 이 방법은 메모리 관리 효율을 최적화합니다.
+  - Automatic Memory Management: Python provides automatic memory management. Developers can focus on object creation, and the memory allocation for created objects is handled automatically by the Python interpreter.
+  - Reference Counting: Python tracks the number of references to an object and releases the object from memory when the reference count reaches 0. This is the most basic memory management technique.
+  - Garbage Collection: To address cyclic reference problems that cannot be solved by reference counting alone, Python includes a garbage collector. It periodically scans the memory to find and release objects that are no longer reachable.
+  - Generational Collection: Python uses generational garbage collection algorithm. It divides objects into multiple generations based on how long they have been created. Garbage from younger generations is collected more frequently, while older generations are collected less frequently. This method optimizes memory management efficiency.
 
-- 종료 처리
-  - 정리 작업: 프로그램이 종료될 때, 파이썬 인터프리터는 열려 있는 파일 핸들을 닫고, 네트워크 연결을 종료하고, 프로세스에 할당된 모든 시스템 리소스를 정리합니다.
-  - 종료 코드 반환: 프로그램이 성공적으로 종료되었는지 또는 오류로 인해 종료되었는지를 나타내는 종료 코드를 운영 체제에 반환합니다.
+- Termination Handling
+  - Cleanup: When a program is terminated, the Python interpreter performs cleanup tasks such as closing open file handles, terminating network connections, and releasing all system resources allocated to the process.
+  - Returning Exit Code: The Python interpreter returns an exit code to the operating system to indicate whether the program terminated successfully or due to an error.
