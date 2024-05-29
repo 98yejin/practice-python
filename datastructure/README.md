@@ -17,16 +17,16 @@
 
 [Time Complexity]
 
-- Accessing by index : O(m)
+- Accessing by index: O(n)
 - Insertion/Deletion
-- Head : O(1)
-- Tail : O(n)
+  - Head: O(1)
+  - Tail: O(1) (if tail pointer is maintained, otherwise O(n))
 - Search: O(n)
 
 [Space Complexity]
 
-- One Node : O(1)
-- Overall Node : O(n)
+- One Node: O(1)
+- Overall Node: O(n)
 
 [When to use]
 
@@ -38,20 +38,20 @@
 
 [Time Complexity]
 
-- Accessing by index : O(m)
+- Accessing by index: O(n)
 - Insertion/Deletion
-- Head : O(1)
-- Tail : O(1)
+  - Head: O(1)
+  - Tail: O(1)
 - Search: O(n)
 
 [Space Complexity]
 
-- One Node : O(1)
-- Overall Node : O(n)
+- One Node: O(1)
+- Overall Node: O(n)
 
 [Why to use]
 
-- Double linked list allow bidirectional traversal, which can be useful in certain scenarios, while single linked lists only support forward traversal.
+- Doubly linked lists allow bidirectional traversal, which can be useful in certain scenarios, while singly linked lists only support forward traversal.
 - But consume more memory per node due to the additional reference to the previous node.
 
 [When to use]
@@ -71,19 +71,19 @@
 - Pre-order traversal (`C -> L -> R`)
 - Post-order traversal (`L -> R -> C`)
 
-[Min-heap]
+### Min-heap
 
 - A complete binary tree where the last level is filled from left to right.
 - Each node's element is smaller than its children.
-- Insert (`O(logn)`), extract_min (`O(logn)`)
+- Insert: O(log n), extract_min: O(log n)
 
 [When to use]
 
-- Searching
-- Tree operations
-- Expression evaluation
-- Serialization/deserialization
-- Tree visualization
+- Priority queues
+- Heapsort
+- Graph algorithms like Dijkstra's shortest path algorithm
+- Load balancing
+- Median maintenance
 
 ### Tries
 
@@ -124,10 +124,10 @@
 
 [Time Complexity]
 
-- empty() O(1)
+- empty(): O(1)
 - size(): O(1)
 - top(), peek(): O(1)
-- push(item): O1
+- push(item): O(1)
 - pop(): O(1)
 
 [Why to use]
@@ -141,27 +141,27 @@
 - Function Call Management
 - Expression Evaluation
 - Undo/Redo Operations
-- Backtracking Algorithms ( Depth First Search )
+- Backtracking Algorithms (Depth First Search)
 - Parsing Algorithms like XML/HTML
 
 ### Queue
 
 [Time Complexity]
 
-- enqueue(item):O(1)
+- enqueue(item): O(1)
 - dequeue(): O(1)
 - peek(): O(1)
 - isEmpty(): O(1)
 
-Python’s collections.deque
+Python’s `collections.deque`
 
-- Copy O(n)
-- Append, Append left O(1)
-- Pop, Pop left O (1)
-- Extend, extend left O(k)
-- Rotate O(k)
-- Remove O(n)
-- Get Length O(1)
+- Copy: O(n)
+- Append, Append left: O(1)
+- Pop, Pop left: O(1)
+- Extend, extend left: O(k)
+- Rotate: O(k)
+- Remove: O(n)
+- Get Length: O(1)
 
 [Why to use]
 
@@ -176,56 +176,55 @@ Python’s collections.deque
 - Print Queue Management
 - Bounded Buffer
 
-### Heapq ( priority queue )
+### Heapq (priority queue)
 
 [methods]
 
-- heapq.heappush()
-- heapq.heappop()
-- heapq.heapify()
-- heapq.nlargest()
-- heapq.nsmallest()
+- `heapq.heappush()`
+- `heapq.heappop()`
+- `heapq.heapify()`
+- `heapq.nlargest()`
+- `heapq.nsmallest()`
 
-[when to use]
+[When to use]
 
 - Heapsort
-- Graph Algorithm
-  (Dijkstra, Prim, A\*)
-- File Compress
+- Graph Algorithm (Dijkstra, Prim, A\*)
+- File Compression
 - Load Balancing
 
 [ETC]
 
 - Heaps are binary trees for which every parent node has a value less than or equal to any of its children. We refer to this condition as the heap invariant.
-- heap[k] <= heap[2*k+1] or heap[k] <= heap[2\*k+2
+- `heap[k] <= heap[2*k+1]` or `heap[k] <= heap[2*k+2]`
 
 ### List
 
 [Time Complexity]
 
-- Copy O(n)
-- Append O(1)
-- Pop Last O(1)
-- Pop intermediate O(n)
-- Insert O(n)
-- Get/Set Item O(1)
-- Delete Item O(n)
-- Iteration O(n)
-- Get Slice O(k)
-- Del Slice O(n)
-- Set Slice O(k+n)
-- Extend O(k)
-- Sort O(nlogn)
-- Multiply O(nk)
-- x in s O(n)
+- Copy: O(n)
+- Append: O(1)
+- Pop Last: O(1)
+- Pop intermediate: O(n)
+- Insert: O(n)
+- Get/Set Item: O(1)
+- Delete Item: O(n)
+- Iteration: O(n)
+- Get Slice: O(k)
+- Del Slice: O(n)
+- Set Slice: O(k+n)
+- Extend: O(k)
+- Sort: O(n log n)
+- Multiply: O(nk)
+- x in s: O(n)
 - min(s): O(n)
 
 [When to use]
 
-- Dynamic memory allocation ( scenarios where the size of the data collection is not known in advance )
+- Dynamic memory allocation (scenarios where the size of the data collection is not known in advance)
 - Implementing stacks and queues
 
-[Etc]
+[ETC]
 
 - Automatically resizes the size of the array.
 - The size of the array or list increases every time data is appended.
@@ -235,14 +234,14 @@ Python’s collections.deque
 
 [Time Complexity]
 
-- K in d O(1) / O(n)
-- Copy O(n) / O(n)
-- get item O(1) / O(n)
-- Set Item O(1) / O(n)
-- Delete item O(1) / O(n)
-- Iteration O(n) / O(n)
+- K in d: O(1) / O(n)
+- Copy: O(n) / O(n)
+- Get Item: O(1) / O(n)
+- Set Item: O(1) / O(n)
+- Delete Item: O(1) / O(n)
+- Iteration: O(n) / O(n)
 
-Avg case times listed for dict objects assume that hash function for the objects is sufficiently robust to make collisions uncommon
+Average case times listed for dict objects assume that the hash function for the objects is sufficiently robust to make collisions uncommon.
 
 [Why to use]
 
