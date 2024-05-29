@@ -2,14 +2,14 @@
 
 ## Contents
 
-- Python Concurrency and Parallelism Problems
+- Python Concurrency and Parallelism Problems : `good for understanding the concept of concurrency and parallelism`
   - Concurrent Web Scraper
   - Parallel File Processing
   - Concurrent Producer-Consumer
-- Concurrent Programming
-- Datastructures
-- Algorithms
-- FAQs
+- Concurrent Programming : `basic concepts of concurrent programming`
+- Datastructures : `basic data structures and their implementations`
+- Algorithms : `basic algorithms and their implementations`
+- FAQs : `frequently asked questions about Python`
 
 ## Python Concurrency and Parallelism Problems
 
