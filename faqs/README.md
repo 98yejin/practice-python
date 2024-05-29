@@ -6,35 +6,7 @@
 - [Context Switching](#context-switching)
 - [Deadlock](#deadlock)
 - [Synchronous vs Asynchronous](#synchronous-vs-asynchronous)
-- [Python's Lifecycle Management](#python's-lifecycle-management)
-
-### Memory - Heap vs Stack
-
-...
-
-### Recursion vs Iteration
-
-...
-
-### Process vs Thread
-
-...
-
-### Context Switching
-
-...
-
-### Deadlock
-
-...
-
-### Synchronous vs Asynchronous
-
-...
-
-### Python's Lifecycle Management
-
-...
+- [Python's Lifecycle Management](#pythons-lifecycle-management)
 
 ### Memory - Heap vs Stack
 
