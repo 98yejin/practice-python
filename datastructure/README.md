@@ -1,5 +1,16 @@
 ## Datastructures
 
+| index | datastructure | link                                 |
+| ----- | ------------- | ------------------------------------ |
+| 1     | Queue         | [link](/datastructure/_queue.py)     |
+| 2     | Hashtable     | [link](/datastructure/hashtable.py)  |
+| 3     | Linked list   | [link](/datastructure/linkedlist.py) |
+| 4     | Stack         | [link](/datastructure/stack.py)      |
+| 5     | Tree          | [link](/datastructure/tree.py)       |
+| 6     | Minheap       | [link](/datastructure/minheap.py)    |
+| 7     | trie          | [link](/datastructure/trie.py)       |
+| 8     | merge sort    | [link](/datastructure/mergesort.py)  |
+
 ### Linked Lists
 
 #### Singly Linked List

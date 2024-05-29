@@ -1,5 +1,12 @@
 ## Algorithms
 
+| index | algorithm     | link                                |
+| ----- | ------------- | ----------------------------------- |
+| 1     | BFS           | [link](/algorithms/bfs.py)          |
+| 2     | DFS           | [link](/algorithms/dfs.py)          |
+| 3     | Binary Search | [link](/algorithms/binarysearch.py) |
+| 4     | Quick Sort    | [link](/algorithms/quicksort.py)    |
+
 ### Breadth-First Search (BFS)
 
 [Time Complexity]
